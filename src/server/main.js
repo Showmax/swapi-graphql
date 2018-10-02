@@ -19,7 +19,6 @@ const app = express();
 const PUBLIC_DIR = path.resolve(__dirname, '../../', 'public');
 
 app.use(cors());
-app.use(express.static(PUBLIC_DIR));
 
 // Requests to /graphql redirect to /
 app.all('/graphql', (req, res) => res.redirect('/'));
@@ -31,6 +30,8 @@ app.use(
     graphiql: true,
   })),
 );
+
+app.use(express.static(PUBLIC_DIR));
 
 // Listen for incoming HTTP requests
 const listener = app.listen(process.env.PORT || undefined, () => {
