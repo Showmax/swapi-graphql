@@ -16,12 +16,14 @@ import path from 'path';
 
 const app = express();
 
-const PUBLIC_DIR = path.resolve(__dirname, '../../', 'public');
+const PUBLIC_DIR = path.resolve(__dirname, '../../', 'public/posters');
 
 app.use(cors());
 
 // Requests to /graphql redirect to /
 app.all('/graphql', (req, res) => res.redirect('/'));
+
+app.use('/posters', express.static(PUBLIC_DIR));
 
 app.use(
   '/',
@@ -30,8 +32,6 @@ app.use(
     graphiql: true,
   })),
 );
-
-app.use(express.static(PUBLIC_DIR));
 
 // Listen for incoming HTTP requests
 const listener = app.listen(process.env.PORT || undefined, () => {
